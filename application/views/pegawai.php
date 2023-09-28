@@ -32,17 +32,9 @@
                     <th>Action</th>
                 </tr>
             </thead>
+            <tbody>
             <?php $no = 1; 
-                if (session_status() == PHP_SESSION_NONE) {
-                    session_start();
-                }
-                
-            $countHidup = 0;
-            $countKritis = 0;
-            $countMati = 0;
-
             foreach($pegawai as $pgw) : ?>
-                <tbody>
                     <tr class="text-left">
                         <td><?= $no++ ?></td>
                         <td><?= $pgw->nama ?></td>
@@ -101,19 +93,11 @@
                             // Determine the color based on your conditions
                               if ($expiredDate > $currentDate && $interval->days >= 50) {
                                 $textColor = 'green'; // Green color for "HIDUP"
-                                $countHidup++;
                             } elseif ($interval->days < 50 && $interval->invert == 0) {
                                 $textColor = 'orange'; // Orange color for "KRITIS"
-                                $countKritis++;
                             } else {
                                 $textColor = 'red'; // Red color for "MATI"
-                                $countMati++;
                             }
-
-                            // Set the counts as session variables
-                            $_SESSION['countHidup'] = $countHidup;
-                            $_SESSION['countKritis'] = $countKritis;
-                            $_SESSION['countMati'] = $countMati;
                             
                             // Display the remaining time with the determined text color
                             echo '<span style="color: ' . $textColor . ';">' . implode(' ', $timeComponents) . '</span>';
@@ -135,8 +119,8 @@
                             <a href="<?= base_url('pegawai/delete/' . $pgw->id_pegawai) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
+                    <?php endforeach ?>
                 </tbody>
-            <?php endforeach ?>
         </table>
     </div>
 </div>
@@ -237,3 +221,4 @@
   </div>
 </div>
 <?php } ?>
+

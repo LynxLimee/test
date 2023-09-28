@@ -39,7 +39,7 @@
       "responsive": true,
       "autoWidth": false,
       "searching": false,
-      "lengthChange": false,
+      "lengthChange": true,
 
     });
     $('#example2').DataTable({
