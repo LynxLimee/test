@@ -113,11 +113,21 @@
                             }
                             ?></td>
                         <!--<td><?= $pgw->status ?></td>-->
+
                         <td>
                             <?php echo anchor('pegawai/detail/' . $pgw->id_pegawai, '<div class="btn btn-primary btn-sm"><i class="fas fa-folder"></i></div>')?>
+                       
+                       <?php
+                            $login = $this->session->userdata('username');
+                            // Check if the user's username is not 'petugas'
+                            if ($login == 'admin') {
+                            ?>
                             <button data-toggle="modal" data-target="#edit<?= $pgw->id_pegawai ?>" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
                             <a href="<?= base_url('pegawai/delete/' . $pgw->id_pegawai) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                        <?php } ?>
+                        
                         </td>
+
                     </tr>
                     <?php endforeach ?>
                 </tbody>
