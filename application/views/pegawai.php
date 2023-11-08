@@ -31,31 +31,37 @@
                     <!--<th>Jenjang Studi</th>-->
                     <!--<th>Tahun Kelulusan</th>-->
                     <th>SKA/SKK</th>
-                    <select id="filter_ska_skk">
+                        <select id="filter_ska_skk">
                         <option value="">Filter SKK</option>
                         <?php
-                        foreach($pegawai as $pgw) : ?>
-                            <option value="<?= $pgw->ska_skk ?>"><?= $pgw->ska_skk ?></option>
-                        <?php endforeach ?>
+                        $uniqueSkaSkkValues = array_unique(array_column($pegawai, 'ska_skk'));
+                        foreach ($uniqueSkaSkkValues as $skaSkkValue) {
+                        ?>
+                        <option value="<?= $skaSkkValue ?>"><?= $skaSkkValue ?></option>
+                        <?php } ?>
                     </select>
                     <th>Grade SKA</th>
                     <select id="filter_grade_ska">
                         <option value="">Filter Grade SKA</option>
                         <?php
-                        foreach($pegawai as $pgw) : ?>
-                            <option value="<?= $pgw->grade_ska ?>"><?= $pgw->grade_ska ?></option>
-                        <?php endforeach ?>
+                        $uniqueGradeSkaValues = array_unique(array_column($pegawai, 'grade_ska'));
+                        foreach ($uniqueGradeSkaValues as $gradeSkaValue) {
+                        ?>
+                        <option value="<?= $gradeSkaValue ?>"><?= $gradeSkaValue ?></option>
+                        <?php } ?>
                     </select>
                     <th>Masa Berlaku</th>
                     <th>Sisa Waktu</th>
                     <!--<th>Keterangan</th>-->
                     <!--<th>Status</th>-->
                     <select id="filter_status">
-                        <option value="">Filter Status</option>
+                    <option value="">Filter Status</option>
                         <?php
-                        foreach($pegawai as $pgw) : ?>
-                            <option value="<?= $pgw->status ?>"><?= $pgw->status ?></option>
-                        <?php endforeach ?>
+                        $uniqueStatusValues = array_unique(array_column($pegawai, 'status'));
+                        foreach ($uniqueStatusValues as $statusValue) {
+                        ?>
+                        <option value="<?= $statusValue ?>"><?= $statusValue ?></option>
+                        <?php } ?>
                     </select>
                     <th>Action</th>
                 </tr>
@@ -172,28 +178,16 @@
 
                         <td>
                             <?php echo anchor('pegawai/detail/' . $pgw->id_pegawai, '<div class="btn btn-primary btn-sm"><i class="fas fa-folder"></i></div>')?>
-<<<<<<< HEAD
-
-                       <?php
-                            $login = $this->session->userdata('username');
-                            // Check if the user's username is not 'petugas'
-                            if ($login == 'root') { //admin
-=======
                        
                        <?php
                             $login = $this->session->userdata('username');
                             // Check if the user's username is not 'petugas'
                             if ($login == 'admin') {
->>>>>>> e6bac564c25e13e8274ad740881f8fb425e018a0
                             ?>
                             <button data-toggle="modal" data-target="#edit<?= $pgw->id_pegawai ?>" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
                             <a href="<?= base_url('pegawai/delete/' . $pgw->id_pegawai) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                         <?php } ?>
-<<<<<<< HEAD
-
-=======
                         
->>>>>>> e6bac564c25e13e8274ad740881f8fb425e018a0
                         </td>
 
                     </tr>

@@ -84,7 +84,7 @@ $(document).ready(function (){
         var statusMatch = selectedStatus === '' || statusCellText === selectedStatus;
 
         //Check if either filter matches
-        if (nameMatch && skaSkkMatch && gradeSkaMatch && keteranganMatch && statusMatch) {
+        if (nameMatch && skaSkkMatch && gradeSkaMatch && statusMatch) {
             $(this).show();
         } else {
             $(this).hide();
