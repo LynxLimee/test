@@ -1,0 +1,10 @@
+--LOGIN--
+
+admin
+username: root
+password: password
+
+petugas
+username: petugas
+password: petugasmce
+

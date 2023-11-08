@@ -99,9 +99,6 @@ class Pegawai extends CI_Controller {
 		$this->form_validation->set_rules('jenjang_studi', 'Jenjang Studi', 'required', array(
 			'required' => '%s harus diisi!'
 		));
-		$this->form_validation->set_rules('tahun_kelulusan', 'Tahun Kelulusan', 'required', array(
-			'required' => '%s harus diisi!'
-		));
 		$this->form_validation->set_rules('ska_skk', 'SKA SKK', 'required', array(
 			'required' => '%s harus diisi!'
 		));

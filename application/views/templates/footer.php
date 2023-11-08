@@ -52,6 +52,53 @@
       "responsive": true,
     });
   });
+
+
 </script>
+<script>
+$(document).ready(function (){
+    //Add event listeners to the filter select elements
+    $('#filter_nama, #filter_ska_skk, #filter_grade_ska, #filter_keterangan, #filter_status').on('change', function () {
+      filterTable();
+});
+
+    //Function to filter the table based on the selected name and SKA/SKK
+    function filterTable(){
+      var selectedName = $('#filter_nama').val();
+      var selectedSkaSkk = $('#filter_ska_skk').val();
+      var selectedGradeSka = $('#filter_grade_ska').val(); 
+      var selectedKeterangan = $('#filter_keterangan').val();
+      var selectedStatus = $('#filter_status').val();
+
+      $('#example1 tbody tr').each(function () {
+        var nameCellText = $(this).find('td:eq(1)').text();
+        var skaSkkCellText = $(this).find('td:eq(2)').text();
+        var gradeSkaCellText = $(this).find('td:eq(3)').text(); 
+        var keteranganCellText = $(this).find('td:eq(4)').text();
+        var statusCellText = $(this).find('td:eq(5)').text();
+
+        var nameMatch = selectedName === '' || nameCellText === selectedName;
+        var skaSkkMatch = selectedSkaSkk === '' || skaSkkCellText === selectedSkaSkk;
+        var gradeSkaMatch = selectedGradeSka === '' || gradeSkaCellText === selectedGradeSka;
+        var keteranganMatch = selectedKeterangan === '' || keteranganCellText === selectedKeterangan;
+        var statusMatch = selectedStatus === '' || statusCellText === selectedStatus;
+
+        //Check if either filter matches
+        if (nameMatch && skaSkkMatch && gradeSkaMatch && keteranganMatch && statusMatch) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+      });
+    }
+
+    //Function to reset the table and show all rows
+    function resetTable(){
+      $('#example1 tbody tr').show();
+    }
+  });
+</script>
+
+
 </body>
 </html>

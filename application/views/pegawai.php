@@ -2,7 +2,7 @@
 
     <div class="card">
     <div class="card-header">
-    <a href="<?= base_url('pegawai/tambah') ?>" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Tambah Pegawai</a>
+    <a href="<?= base_url('pegawai/tambah') ?>" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Tambah SKA</a>
     </div>
 
     <div class="navbar-form" style="display: flex; align-items: center; justify-content: flex-end;">
@@ -21,14 +21,42 @@
                 <tr class="text-center">
                     <th>No</th>
                     <th>Nama</th>
+                    <select id="filter_nama">
+                        <option value="">Filter Nama</option>
+                        <?php
+                        foreach($pegawai as $pgw) : ?>
+                            <option value="<?= $pgw->nama ?>"><?= $pgw->nama ?></option>
+                        <?php endforeach ?>
+                    </select>
                     <!--<th>Jenjang Studi</th>-->
                     <!--<th>Tahun Kelulusan</th>-->
                     <th>SKA/SKK</th>
-                    <!--<th>Grade SKA</th>-->
+                    <select id="filter_ska_skk">
+                        <option value="">Filter SKK</option>
+                        <?php
+                        foreach($pegawai as $pgw) : ?>
+                            <option value="<?= $pgw->ska_skk ?>"><?= $pgw->ska_skk ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <th>Grade SKA</th>
+                    <select id="filter_grade_ska">
+                        <option value="">Filter Grade SKA</option>
+                        <?php
+                        foreach($pegawai as $pgw) : ?>
+                            <option value="<?= $pgw->grade_ska ?>"><?= $pgw->grade_ska ?></option>
+                        <?php endforeach ?>
+                    </select>
                     <th>Masa Berlaku</th>
                     <th>Sisa Waktu</th>
-                    <th>Keterangan</th>
+                    <!--<th>Keterangan</th>-->
                     <!--<th>Status</th>-->
+                    <select id="filter_status">
+                        <option value="">Filter Status</option>
+                        <?php
+                        foreach($pegawai as $pgw) : ?>
+                            <option value="<?= $pgw->status ?>"><?= $pgw->status ?></option>
+                        <?php endforeach ?>
+                    </select>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -41,8 +69,36 @@
                         <!--<td><?= $pgw->jenjang_studi ?></td>-->
                         <!--<td><?= $pgw->tahun_kelulusan ?></td>-->
                         <td><?= $pgw->ska_skk ?></td>
-                        <!--<td><?= $pgw->grade_ska ?></td>-->
-                        <td><?= $pgw->masa_berlaku ?></td>
+                        <td><?= $pgw->grade_ska ?></td>
+                        <?php
+                        // Assuming $pgw->masa_berlaku contains a date in the format 'Y-m-d' like '2023-10-01'
+                        $masa_berlaku = $pgw->masa_berlaku;
+
+                        // Define an array of Indonesian month names
+                        $bulan = array(
+                            1 => 'Januari',
+                            2 => 'Februari',
+                            3 => 'Maret',
+                            4 => 'April',
+                            5 => 'Mei',
+                            6 => 'Juni',
+                            7 => 'Juli',
+                            8 => 'Agustus',
+                            9 => 'September',
+                            10 => 'Oktober',
+                            11 => 'November',
+                            12 => 'Desember'
+                        );
+
+                        // Parse the date and format it in Indonesian
+                        $parts = explode('-', $masa_berlaku);
+                        $day = (int)$parts[2];
+                        $month = $bulan[(int)$parts[1]];
+                        $year = (int)$parts[0];
+
+                        $formattedDate = $day . ' ' . $month . ' ' . $year;
+                        ?>
+                        <td><?= $formattedDate ?></td>
                         <td><?php
                             // Set the time zone to match your server's time zone
                             date_default_timezone_set('Asia/Jakarta');
@@ -102,7 +158,7 @@
                             // Display the remaining time with the determined text color
                             echo '<span style="color: ' . $textColor . ';">' . implode(' ', $timeComponents) . '</span>';
                             ?></td>
-                        <td><?php
+                        <!--<td><?php
                             // Check if the expiration date is in the future, if so, display "ACTIVE," otherwise, display "INACTIVE"
                             if ($expiredDate > $currentDate && $interval->days >= 50) {
                                 echo '<span class="badge badge-success">HIDUP</span>';
@@ -111,13 +167,23 @@
                             } else {
                                 echo '<span class="badge badge-danger">MATI</span>';
                             }
-                            ?></td>
+                            ?></td>-->
                         <!--<td><?= $pgw->status ?></td>-->
+
                         <td>
                             <?php echo anchor('pegawai/detail/' . $pgw->id_pegawai, '<div class="btn btn-primary btn-sm"><i class="fas fa-folder"></i></div>')?>
+
+                       <?php
+                            $login = $this->session->userdata('username');
+                            // Check if the user's username is not 'petugas'
+                            if ($login == 'root') { //admin
+                            ?>
                             <button data-toggle="modal" data-target="#edit<?= $pgw->id_pegawai ?>" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></button>
                             <a href="<?= base_url('pegawai/delete/' . $pgw->id_pegawai) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin menghapus data ini?')"><i class="fas fa-trash"></i></a>
+                        <?php } ?>
+
                         </td>
+
                     </tr>
                     <?php endforeach ?>
                 </tbody>

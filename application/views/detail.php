@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <th>Keterangan</th>
-                <td><?php echo $status; ?></td>
+                <td><strong><?php echo $status; ?></strong></td>
             </tr>
             <tr>
                 <th>Status</th>
@@ -82,7 +82,7 @@
                                 <span class="file-extension-icon xlsx">XLSX</span>
                             <?php else : ?>
                                 <img src="<?= base_url($detail->file_img); ?>"
-                                    class="avatar-sm rounded" alt="file" style="max-width: 64px; max-height: 128px;"/>
+                                    class="avatar-sm rounded" alt="file" style="max-width: 400px; max-height: 750px;"/>
                             <?php endif; ?>
                         </div>
                         <div class="col pl-0">
@@ -138,7 +138,7 @@
                             <?php endif; ?>
                             </div>
                             <div class="col pl-0">
-                                <a href="javascript:void(0);"
+                                <a href="<?= base_url($detail->file_file); ?>" target="_blank"
                                     class="text-muted font-weight-bold"><?= substr($detail->file_file, 10); ?></a>
                             </div>
                             <div class="col-auto">
